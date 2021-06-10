@@ -3,4 +3,4 @@ package com.farahaniconsulting.shopo.model
 
 import com.google.gson.annotations.SerializedName
 
-class ShoppingItems : ArrayList<ShoppingItemsItem>()
+class ShoppingItems : ArrayList<ShoppingItem>()

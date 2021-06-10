@@ -1,4 +1,13 @@
 package com.farahaniconsulting.shopo.dto
 
-data class ShoppingITem {
-}
+import android.os.Parcelable
+import com.google.gson.annotations.SerializedName
+import kotlinx.android.parcel.Parcelize
+
+@Parcelize
+data class ShoppingItemDTO(val id: String?,
+                            val name: String?,
+                            val price: String?,
+                            val qrUrl: String?,
+                            val thumbnail: String?
+                            ) : Parcelable

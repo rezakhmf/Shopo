@@ -1,4 +1,4 @@
-package com.farahaniconsulting.shopo.ui.util
+package com.farahaniconsulting.shopo.ui.util.text
 
 import android.content.Context
 

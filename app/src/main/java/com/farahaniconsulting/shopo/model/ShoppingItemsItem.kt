@@ -1,9 +1,10 @@
 package com.farahaniconsulting.shopo.model
 
 
+import com.farahaniconsulting.shopo.dto.ShoppingItemDTO
 import com.google.gson.annotations.SerializedName
 
-data class ShoppingItemsItem(
+data class ShoppingItem(
     @SerializedName("id")
     val id: String?,
     @SerializedName("name")
@@ -14,4 +15,11 @@ data class ShoppingItemsItem(
     val qrUrl: String?,
     @SerializedName("thumbnail")
     val thumbnail: String?
-)
+) {
+    fun toDTO() = ShoppingItemDTO(
+        id = id,
+        name = name,
+        price = price,
+        qrUrl = qrUrl,
+        thumbnail = thumbnail)
+}

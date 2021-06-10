@@ -1,4 +1,8 @@
 package com.farahaniconsulting.shopo.data.repository
 
-class ShopoRepository {
+import com.farahaniconsulting.shopo.model.ShoppingItems
+import io.reactivex.Single
+
+interface ShopoRepository {
+    fun getShoppingItems(): Single<ShoppingItems>
 }

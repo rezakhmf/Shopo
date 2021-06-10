@@ -13,7 +13,7 @@ import timber.log.Timber
 import java.io.IOException
 import javax.inject.Named
 
-class ShoppingItemViewModel(
+class ShoppingItemsViewModel(
     private val getShoppingItemsUC: GetShoppingItemsUC,
 @Named(OBSERVER_ON) private val observerOn: Scheduler
 ) : BaseViewModel() {
