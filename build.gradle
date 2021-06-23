@@ -5,6 +5,7 @@ buildscript {
     dependencies {
         classpath langs.android_gradle_plugin
         classpath langs.kotlin
+        classpath deps.androidx.navigation_args
     }
 }
 

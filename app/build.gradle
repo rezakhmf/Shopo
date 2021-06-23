@@ -72,6 +72,9 @@ dependencies {
     implementation deps.androidx.livedata
     // Saved state module for ViewModel
     implementation deps.androidx.lifecycle_viewmodel_savedstate
+    // navigation
+    implementation deps.androidx.navigation_fragment
+    implementation deps.androidx.navigation_ui
     // alternately - if using Java8, use the following instead of lifecycle-compiler
     implementation deps.androidx.lifecycle_common_java8
     // optional - ReactiveStreams support for LiveData
