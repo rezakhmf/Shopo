@@ -13,11 +13,12 @@ import java.io.InputStream
 class ShoppingItemsLocalRepository() : ShopoRepository {
 
 
-    override fun getShoppingItems(): Single<ShoppingItems> {
+    override fun getShoppingItems(content: String?): Single<ShoppingItems?> {
 
-        var shoppingItemsType = object : TypeToken<ShoppingItems>() {}.type
-
-        val result: ShoppingItems = Gson().fromJson("file name".readFileFromResources(), shoppingItemsType)
+        var result: ShoppingItems? = null
+        content?.let {
+            result = Gson().fromJson(it, ShoppingItems::class.java)
+        }
 
         return Single.just(result)
     }

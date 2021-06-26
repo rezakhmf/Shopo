@@ -12,7 +12,7 @@ abstract class UseCase<in Req : UseCase.RequestValues, Res : UseCase.ResponseVal
         return executeUseCase(requestValues)
             .subscribeOn(backgroundScheduler)
     }
-
+    
     protected abstract fun executeUseCase(requestValues: Req): Single<Res>
 
     /**

@@ -7,6 +7,6 @@ import io.reactivex.Single
 
 class ShoppingItemsRemoteRepository(private val apiService: ApiService) : ShopoRepository {
 
-    override fun getShoppingItems() =
+    override fun getShoppingItems(content: String?) =
         apiService.getShoppingItems()
 }

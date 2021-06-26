@@ -5,6 +5,7 @@ import com.farahaniconsulting.shopo.domain.base.UseCase
 import com.farahaniconsulting.shopo.dto.ShoppingItemDTO
 import io.reactivex.Scheduler
 import io.reactivex.Single
+import javax.inject.Named
 
 class GetShoppingItemsUC(
     private val repository: ShopoRepository,
@@ -12,8 +13,10 @@ class GetShoppingItemsUC(
 ) :
     UseCase<GetShoppingItemsUC.RequestValues, GetShoppingItemsUC.ResponseValue>(backgroundScheduler) {
 
+    var content: String? = null
+
     override fun executeUseCase(requestValues: RequestValues): Single<ResponseValue> =
-         repository.getShoppingItems().map {
+         repository.getShoppingItems(content).map {
             val results = it.map { shoppingItem ->
                 shoppingItem.toDTO().apply {
 

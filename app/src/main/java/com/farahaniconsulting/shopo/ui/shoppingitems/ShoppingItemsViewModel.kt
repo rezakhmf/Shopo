@@ -20,13 +20,15 @@ class ShoppingItemsViewModel(
 
     private val mutableViewState = MutableLiveData<ShoppingItemsContract.ViewState>()
 
+    var content: String? = null
+
     val viewState: LiveData<ShoppingItemsContract.ViewState>
         get() = mutableViewState
 
     fun fetchShoppingItems() {
 
         mutableViewState.value  = ShoppingItemsContract.ViewState(isLoading = true, errorState = null)
-
+        getShoppingItemsUC.content = this.content
         addDisposable(
             getShoppingItemsUC.run(GetShoppingItemsUC.RequestValues())
                 .observeOn(observerOn)

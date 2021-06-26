@@ -10,6 +10,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.farahaniconsulting.shopo.databinding.FragmentShoppingListBinding
 import com.farahaniconsulting.shopo.di.modules.ViewModelFactory
+import com.farahaniconsulting.shopo.ui.getJsonDataFromAsset
 import com.farahaniconsulting.shopo.ui.shoppingitems.ShoppingItemsContract
 import com.farahaniconsulting.shopo.ui.shoppingitems.ShoppingItemsViewModel
 import com.farahaniconsulting.shopo.ui.shoppingitems.list.adapter.ShoppingListAdapter
@@ -41,6 +42,7 @@ class ShoppingItemsListFragment : Fragment(), HasAndroidInjector {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         viewModel = ViewModelProvider(this, vmFactory).get(ShoppingItemsViewModel::class.java)
+        viewModel.content = requireContext().getJsonDataFromAsset(SHOPPING_LIST_SAMPLE_DATA)
         viewModel.fetchShoppingItems()
     }
 
@@ -114,4 +116,8 @@ class ShoppingItemsListFragment : Fragment(), HasAndroidInjector {
     interface OnFragmentInteractionListener
 
     override fun androidInjector(): AndroidInjector<Any> = androidInjector
+
+    companion object {
+        const val SHOPPING_LIST_SAMPLE_DATA = "shopping-list-sample-data.json"
+    }
 }
