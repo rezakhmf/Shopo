@@ -2,6 +2,10 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/app_navigation">
-
+    <fragment
+        android:id="@+id/shoppingItemsListFragment">
+        <action
+            android:id="@+id/shoppingItemsListFragment_shoppingItemDetailFragment"/>
+    </fragment>
 
 </navigation>

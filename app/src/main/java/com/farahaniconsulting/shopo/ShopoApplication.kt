@@ -1,6 +1,7 @@
 package com.farahaniconsulting.shopo
 
 import android.app.Application
+import com.farahaniconsulting.shopo.di.component.DaggerAppComponent
 import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.HasAndroidInjector
@@ -30,5 +31,4 @@ class ShopoApplication  : Application(), HasAndroidInjector {
     }
 
     override fun androidInjector(): AndroidInjector<Any> = androidInjector
-    }
 }
