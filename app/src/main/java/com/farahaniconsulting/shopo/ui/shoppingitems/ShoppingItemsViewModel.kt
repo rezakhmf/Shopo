@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.farahaniconsulting.shopo.di.modules.OBSERVER_ON
 import com.farahaniconsulting.shopo.domain.shoppingITems.GetShoppingItemsUC
+import com.farahaniconsulting.shopo.dto.ShoppingItemDTO
 import com.farahaniconsulting.shopo.ui.base.BaseViewModel
 import com.farahaniconsulting.shopo.ui.data.PageErrorState
 import io.reactivex.Scheduler
@@ -22,12 +23,16 @@ class ShoppingItemsViewModel(
 
     var content: String? = null
 
+    lateinit var totalPrice: String
+
     val viewState: LiveData<ShoppingItemsContract.ViewState>
         get() = mutableViewState
 
     fun fetchShoppingItems() {
 
-        mutableViewState.value  = ShoppingItemsContract.ViewState(isLoading = true, errorState = null)
+        mutableViewState.value  = ShoppingItemsContract.ViewState(
+            isLoading = true, errorState = null
+        )
         getShoppingItemsUC.content = this.content
         addDisposable(
             getShoppingItemsUC.run(GetShoppingItemsUC.RequestValues())
@@ -36,6 +41,7 @@ class ShoppingItemsViewModel(
                     object : DisposableSingleObserver<GetShoppingItemsUC.ResponseValue>() {
                         override fun onSuccess(apiResponse: GetShoppingItemsUC.ResponseValue) {
                             Timber.d("Shopping Items = ${apiResponse.shoppingItems.size}")
+                            totalPrice = totalCalculator(apiResponse.shoppingItems)
                             mutableViewState.value = ShoppingItemsContract.ViewState(
                                 isLoading = false,
                                 activityData = apiResponse.shoppingItems
@@ -61,4 +67,7 @@ class ShoppingItemsViewModel(
             errorState = errorState
         )
     }
+
+    private fun totalCalculator(shoppingItems: List<ShoppingItemDTO>) =
+        "$" + shoppingItems.map { it.price }.sumByDouble { it?.removePrefix("$")?.toDouble()!! }.toString()
 }

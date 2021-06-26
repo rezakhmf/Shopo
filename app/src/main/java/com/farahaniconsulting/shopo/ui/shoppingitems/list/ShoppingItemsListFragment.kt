@@ -2,6 +2,7 @@ package com.farahaniconsulting.shopo.ui.shoppingitems.list
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -54,6 +55,7 @@ class ShoppingItemsListFragment : Fragment(), HasAndroidInjector {
         binding = FragmentShoppingListBinding.inflate(inflater, container, false)
         shoppingListAdapter = ShoppingListAdapter {
             //call bottom navigation for delete the item
+            Timber.d(it.name)
         }
         setUpRecyclerView()
         return binding.root
@@ -102,6 +104,7 @@ class ShoppingItemsListFragment : Fragment(), HasAndroidInjector {
         if (viewState.activityData.isNotEmpty()) {
             showListView(true)
             shoppingListAdapter.submitList(viewState.activityData)
+            binding.totalPrice.text = viewModel.totalPrice
         }
     }
 
