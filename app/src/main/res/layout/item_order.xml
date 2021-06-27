@@ -46,12 +46,25 @@
                 android:orientation="vertical"
                 app:layout_constraintGuide_end="8dp" />
 
+            <ImageView
+                android:id="@+id/shoppingItemImageView"
+                android:layout_width="64dp"
+                android:layout_height="64dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="70dp"
+                android:layout_marginBottom="29dp"
+                android:alpha=".86"
+                app:imageSrc="@{shoppingItem.thumbnail}"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                tools:srcCompat="@drawable/ic_close_round_icon" />
+
             <TextView
                 android:id="@+id/itemName"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginEnd="24dp"
                 android:ellipsize="end"
                 android:singleLine="true"
                 android:text="@{shoppingItem.name}"
@@ -59,11 +72,11 @@
                 android:textStyle="bold"
                 android:layout_marginTop="16dp"
                 android:layout_marginBottom="16dp"
-                android:layout_marginLeft="16dp"
                 android:textAlignment="center"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="24dp"
+                app:layout_constraintLeft_toRightOf="@id/shoppingItemImageView"
+                app:layout_constraintTop_toTopOf="@id/shoppingItemImageView"
                 app:layout_constraintVertical_chainStyle="packed"
                 tools:text="Name" />
 
@@ -80,9 +93,9 @@
                 android:textStyle="bold"
                 android:layout_marginLeft="16dp"
                 android:textAlignment="center"
-                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintTop_toTopOf="@id/itemName"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintBottom_toBottomOf="@id/itemName"
                 app:layout_constraintVertical_chainStyle="packed"
                 tools:text="Total" />
 

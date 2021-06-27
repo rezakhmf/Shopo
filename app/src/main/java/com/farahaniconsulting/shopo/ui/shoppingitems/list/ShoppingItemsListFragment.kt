@@ -69,8 +69,8 @@ class ShoppingItemsListFragment : Fragment(), HasAndroidInjector, ShoppingNewIte
         binding.apply {
             shoppingListRV.adapter = shoppingListAdapter
             addOrderButton.setOnClickListener {
-                val dialog = ShoppingNewItemDialogFragment(this@ShoppingItemsListFragment)
-                dialog.show(parentFragmentManager, ShoppingNewItemDialogFragment.TAG)
+                ShoppingNewItemDialogFragment.newInstance(this@ShoppingItemsListFragment)
+                    .show(parentFragmentManager, ShoppingNewItemDialogFragment.TAG)
             }
         }
     }
@@ -120,15 +120,19 @@ class ShoppingItemsListFragment : Fragment(), HasAndroidInjector, ShoppingNewIte
 
     override fun onDataReceived(item: ShoppingItemDTO) {
         viewModel.addNewShoppingItem(item)
-    }
+        binding.totalPrice.text = viewModel.totalPrice
 
-    private fun showError(errorMessage: String) {
-        Snackbar.make(binding.root, errorMessage, Snackbar.LENGTH_LONG).show()
     }
 
     private fun showListView(show: Boolean) {
         binding.shoppingListRV.visibility = if (show) View.VISIBLE else View.GONE
     }
+
+    private fun showError(errorMessage: String) =
+        Snackbar.make(binding.root, errorMessage, Snackbar.LENGTH_LONG).show()
+
+    private val totalPriceUpdated : String
+        get() = viewModel.totalPrice
 
     interface OnFragmentInteractionListener
 

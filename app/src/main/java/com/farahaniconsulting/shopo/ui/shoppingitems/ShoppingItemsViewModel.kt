@@ -68,6 +68,7 @@ class ShoppingItemsViewModel(
 
     fun addNewShoppingItem(item: ShoppingItemDTO) {
         shoppingItems += item
+        totalPrice = totalCalculator(shoppingItems)
         mutableViewState.value = ShoppingItemsContract.ViewState(
             isLoading = false,
             activityData = shoppingItems

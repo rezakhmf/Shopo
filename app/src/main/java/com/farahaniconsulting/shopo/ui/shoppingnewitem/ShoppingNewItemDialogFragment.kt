@@ -8,8 +8,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
 import com.farahaniconsulting.shopo.databinding.FragmentShoppingNewItemBinding
 import com.farahaniconsulting.shopo.dto.ShoppingItemDTO
-import com.google.android.material.snackbar.Snackbar
-import kotlinx.android.synthetic.main.fragment_shopping_new_item.*
+
 
 class ShoppingNewItemDialogFragment(private val callbackListener: CallbackListener): DialogFragment() {
 
@@ -61,5 +60,9 @@ class ShoppingNewItemDialogFragment(private val callbackListener: CallbackListen
 
     companion object {
         const val TAG = "ShoppingNewItemDialogFragment"
+
+        fun newInstance(callbackListener: CallbackListener): ShoppingNewItemDialogFragment {
+            return ShoppingNewItemDialogFragment(callbackListener)
+        }
     }
 }
