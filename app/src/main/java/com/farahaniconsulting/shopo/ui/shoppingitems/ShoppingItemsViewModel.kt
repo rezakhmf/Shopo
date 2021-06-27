@@ -76,9 +76,11 @@ class ShoppingItemsViewModel(
     }
 
     fun deleteShoppingItem(itemName: String) {
+        shoppingItems = shoppingItems.filter { it.name != itemName }
+        totalPrice = totalCalculator(shoppingItems)
         mutableViewState.value = ShoppingItemsContract.ViewState(
             isLoading = false,
-            activityData = shoppingItems.filter { it.name != itemName }
+            activityData = shoppingItems
         )
     }
 
