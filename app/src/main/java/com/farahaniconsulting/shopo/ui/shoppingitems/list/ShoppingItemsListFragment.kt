@@ -13,6 +13,7 @@ import com.farahaniconsulting.shopo.databinding.FragmentShoppingListBinding
 import com.farahaniconsulting.shopo.di.modules.ViewModelFactory
 import com.farahaniconsulting.shopo.dto.ShoppingItemDTO
 import com.farahaniconsulting.shopo.ui.getJsonDataFromAsset
+import com.farahaniconsulting.shopo.ui.shoppingitems.ShoppingItemBottomSheet
 import com.farahaniconsulting.shopo.ui.shoppingitems.ShoppingItemsContract
 import com.farahaniconsulting.shopo.ui.shoppingitems.ShoppingItemsViewModel
 import com.farahaniconsulting.shopo.ui.shoppingitems.list.adapter.ShoppingListAdapter
@@ -27,7 +28,10 @@ import timber.log.Timber
 import java.lang.RuntimeException
 import javax.inject.Inject
 
-class ShoppingItemsListFragment : Fragment(), HasAndroidInjector, ShoppingNewItemDialogFragment.CallbackListener {
+class ShoppingItemsListFragment : Fragment(),
+    HasAndroidInjector,
+    ShoppingNewItemDialogFragment.CallbackListener,
+    ShoppingItemBottomSheet.CallbackListener {
 
     @Inject
     lateinit var androidInjector: DispatchingAndroidInjector<Any>
@@ -57,10 +61,11 @@ class ShoppingItemsListFragment : Fragment(), HasAndroidInjector, ShoppingNewIte
     ): View? {
         binding = FragmentShoppingListBinding.inflate(inflater, container, false)
         shoppingListAdapter = ShoppingListAdapter {
-            //call bottom navigation for delete the item
-            Timber.d(it.name)
+            it.name?.let {  name ->
+                ShoppingItemBottomSheet.newInstance(name,this@ShoppingItemsListFragment)
+                    .show(parentFragmentManager, ShoppingItemBottomSheet.TAG)
+            }
         }
-
         setupUI()
         return binding.root
     }
@@ -122,6 +127,11 @@ class ShoppingItemsListFragment : Fragment(), HasAndroidInjector, ShoppingNewIte
         viewModel.addNewShoppingItem(item)
         binding.totalPrice.text = viewModel.totalPrice
 
+    }
+
+    override fun onDeleteClicked(itemName: String) {
+        viewModel.deleteShoppingItem(itemName)
+        binding.totalPrice.text = viewModel.totalPrice
     }
 
     private fun showListView(show: Boolean) {

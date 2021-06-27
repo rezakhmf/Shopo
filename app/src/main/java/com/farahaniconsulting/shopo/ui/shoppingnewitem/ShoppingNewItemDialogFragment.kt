@@ -12,7 +12,9 @@ import com.farahaniconsulting.shopo.dto.ShoppingItemDTO
 
 class ShoppingNewItemDialogFragment(private val callbackListener: CallbackListener): DialogFragment() {
 
-    private lateinit var binding: FragmentShoppingNewItemBinding
+    private var _binding: FragmentShoppingNewItemBinding? = null
+
+    private val binding get() = _binding!!
 
     override fun onStart() {
         super.onStart()
@@ -29,7 +31,7 @@ class ShoppingNewItemDialogFragment(private val callbackListener: CallbackListen
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = FragmentShoppingNewItemBinding.inflate(inflater, container, false)
+        _binding = FragmentShoppingNewItemBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -44,14 +46,19 @@ class ShoppingNewItemDialogFragment(private val callbackListener: CallbackListen
                          id = null,
                          name = itemName,
                          price = "$$itemPrice",
-                         qrUrl = null,
-                         thumbnail = null
+                         qrUrl = "",
+                         thumbnail = ""
                      )
                      callbackListener.onDataReceived(shoppingItem)
                  }
                 dismiss()
             }
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
     interface CallbackListener {

@@ -75,6 +75,13 @@ class ShoppingItemsViewModel(
         )
     }
 
+    fun deleteShoppingItem(itemName: String) {
+        mutableViewState.value = ShoppingItemsContract.ViewState(
+            isLoading = false,
+            activityData = shoppingItems.filter { it.name != itemName }
+        )
+    }
+
     private fun handleLoadingError(errorState: PageErrorState) {
         mutableViewState.value = ShoppingItemsContract.ViewState(
             isLoading = false,
