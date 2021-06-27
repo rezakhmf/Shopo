@@ -21,6 +21,8 @@ class ShoppingItemsViewModel(
 
     private val mutableViewState = MutableLiveData<ShoppingItemsContract.ViewState>()
 
+    private var shoppingItems: List<ShoppingItemDTO> = mutableListOf()
+
     var content: String? = null
 
     lateinit var totalPrice: String
@@ -42,9 +44,12 @@ class ShoppingItemsViewModel(
                         override fun onSuccess(apiResponse: GetShoppingItemsUC.ResponseValue) {
                             Timber.d("Shopping Items = ${apiResponse.shoppingItems.size}")
                             totalPrice = totalCalculator(apiResponse.shoppingItems)
+
+                            shoppingItems += apiResponse.shoppingItems
+
                             mutableViewState.value = ShoppingItemsContract.ViewState(
                                 isLoading = false,
-                                activityData = apiResponse.shoppingItems
+                                activityData = shoppingItems
                             )
                         }
 
@@ -58,6 +63,14 @@ class ShoppingItemsViewModel(
                         }
                     }
                 )
+        )
+    }
+
+    fun addNewShoppingItem(item: ShoppingItemDTO) {
+        shoppingItems += item
+        mutableViewState.value = ShoppingItemsContract.ViewState(
+            isLoading = false,
+            activityData = shoppingItems
         )
     }
 

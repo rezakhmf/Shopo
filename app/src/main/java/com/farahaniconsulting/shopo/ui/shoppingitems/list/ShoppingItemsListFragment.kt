@@ -11,20 +11,23 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.farahaniconsulting.shopo.databinding.FragmentShoppingListBinding
 import com.farahaniconsulting.shopo.di.modules.ViewModelFactory
+import com.farahaniconsulting.shopo.dto.ShoppingItemDTO
 import com.farahaniconsulting.shopo.ui.getJsonDataFromAsset
 import com.farahaniconsulting.shopo.ui.shoppingitems.ShoppingItemsContract
 import com.farahaniconsulting.shopo.ui.shoppingitems.ShoppingItemsViewModel
 import com.farahaniconsulting.shopo.ui.shoppingitems.list.adapter.ShoppingListAdapter
+import com.farahaniconsulting.shopo.ui.shoppingnewitem.ShoppingNewItemDialogFragment
 import com.google.android.material.snackbar.Snackbar
 import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.HasAndroidInjector
 import dagger.android.support.AndroidSupportInjection
+import kotlinx.android.synthetic.main.activity_main.*
 import timber.log.Timber
 import java.lang.RuntimeException
 import javax.inject.Inject
 
-class ShoppingItemsListFragment : Fragment(), HasAndroidInjector {
+class ShoppingItemsListFragment : Fragment(), HasAndroidInjector, ShoppingNewItemDialogFragment.CallbackListener {
 
     @Inject
     lateinit var androidInjector: DispatchingAndroidInjector<Any>
@@ -57,12 +60,19 @@ class ShoppingItemsListFragment : Fragment(), HasAndroidInjector {
             //call bottom navigation for delete the item
             Timber.d(it.name)
         }
-        setUpRecyclerView()
+
+        setupUI()
         return binding.root
     }
 
-    private fun setUpRecyclerView() {
-        binding.shoppingListRV.adapter = shoppingListAdapter
+    private fun setupUI() {
+        binding.apply {
+            shoppingListRV.adapter = shoppingListAdapter
+            addOrderButton.setOnClickListener {
+                val dialog = ShoppingNewItemDialogFragment(this@ShoppingItemsListFragment)
+                dialog.show(parentFragmentManager, ShoppingNewItemDialogFragment.TAG)
+            }
+        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -106,6 +116,10 @@ class ShoppingItemsListFragment : Fragment(), HasAndroidInjector {
             shoppingListAdapter.submitList(viewState.activityData)
             binding.totalPrice.text = viewModel.totalPrice
         }
+    }
+
+    override fun onDataReceived(item: ShoppingItemDTO) {
+        viewModel.addNewShoppingItem(item)
     }
 
     private fun showError(errorMessage: String) {
